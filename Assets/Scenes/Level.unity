@@ -220,11 +220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5732579145467269537, guid: 633aed1d8a0ab13468567ba5956e584e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.0717278
+      value: -1.14
       objectReference: {fileID: 0}
     - target: {fileID: 5732579145467269537, guid: 633aed1d8a0ab13468567ba5956e584e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.71
+      value: -1.16
       objectReference: {fileID: 0}
     - target: {fileID: 5732579145467269537, guid: 633aed1d8a0ab13468567ba5956e584e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -277,11 +277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5732579145467269537, guid: 633aed1d8a0ab13468567ba5956e584e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1783984
+      value: 1.27
       objectReference: {fileID: 0}
     - target: {fileID: 5732579145467269537, guid: 633aed1d8a0ab13468567ba5956e584e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.83
+      value: -0.88
       objectReference: {fileID: 0}
     - target: {fileID: 5732579145467269537, guid: 633aed1d8a0ab13468567ba5956e584e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -729,8 +729,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683438564}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: -5.586, z: 0}
-  m_LocalScale: {x: 0.37592027, y: 1.405, z: 1}
+  m_LocalPosition: {x: -0.01, y: -5.326, z: 0}
+  m_LocalScale: {x: 0.37592027, y: 1.7379849, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1975562891}
@@ -844,8 +844,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1803724763
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b1efa917c9ed58745a020b0addf2fa12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -870,6 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f93aa7e93a586c545828c6b75b0507ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _force: 5
   _sprites:
   - {fileID: 21300000, guid: 0d65b85106f4fb94c821059de4b97f5d, type: 3}
   - {fileID: 21300000, guid: 9a6991a6f4101ec49adbd4140217781a, type: 3}
