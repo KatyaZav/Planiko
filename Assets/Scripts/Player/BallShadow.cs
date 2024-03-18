@@ -20,7 +20,6 @@ public class BallShadow : MonoBehaviour
         var cells = (Top - Bottom) / _sprites.Length;
         var index = (int)((transform.position.y - Bottom) / cells);
 
-        Debug.Log(index);
         _sprite.sprite = _sprites[index];
     }
 }
