@@ -29,10 +29,11 @@ public class Plinko : MonoBehaviour
     {
         col.enabled = true;
 
-        obj.transform.SetParent(_ballZone);
+        obj.transform.SetParent(_ballZone);        
         obj.transform.position = _ballZone.position;
 
         ChoosedBall = obj.GetComponent<BallShadow>();
+
         AddBall(ChoosedBall);
     }
 
