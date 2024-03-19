@@ -8,73 +8,94 @@ public class Plinko : MonoBehaviour
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _sprite;
 
-    const float _top = -1.9f; 
-    const float _bottom = -2.6f;
+    [SerializeField] Transform[] _ballZones;
 
-    /*private void OnMouseExit()
-    {
-        Throw();
-    }*/
+    [SerializeField] Transform _top;
+    [SerializeField] Transform _bottom;
+    [SerializeField] Transform _ballZone;
 
-    /*private void OnMouseOver()
-    {
-        Move();
-        PullString();
-    }*/
+    private List<BallShadow> balls = new List<BallShadow>();
+  
+    public BallShadow ChoosedBall;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    public void ChooseBall(GameObject obj)
     {
-        Move();
+        obj.transform.SetParent(_ballZone);
+        obj.transform.position = _ballZone.position;
+
+        ChoosedBall = obj.GetComponent<BallShadow>();
     }
 
-    void Move()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Mouse.Ball == null)
-            return;
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("throw");
-            Mouse.Ball.Rb.AddForce(Vector2.up * (GetIndex()+0.2f)*_force, ForceMode2D.Impulse);
-            Mouse.Ball = null;
-            Throw();
-            return;
-        }
-
-        var mousePosX = Mouse.GetMousePos().x;
-
-        var pos = transform.position;
-        pos.x = (mousePosX);
-
-        if (pos.x > 0.4f || pos.x < -0.3f)
-        {
-            Throw();
-            return;
-        }
-
-        PullString();        
-        transform.position = pos;
+        var ball = collision.gameObject.GetComponent<BallShadow>();
+        ball.plinko = this;
+        balls.Add(ball);
     }
 
-    void PullString()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        var index = GetIndex();
+        var ball = collision.gameObject.GetComponent<BallShadow>();
+        ball.plinko = null;
+        balls.Remove(ball);
+    }
+
+  
+    public void TryPullString(Vector2 vec)
+    {
+        if (ChoosedBall == null)
+            return;
+
+        PullString(vec);
+    }
+
+    public void TryThrow(Vector2 mouse)
+    {
+        if (ChoosedBall == null)
+            return;
+
+        Throw(mouse);
+    }
+
+    public void PullString(Vector2 vec)
+    {
+        int index = GetIndex(vec);
 
         index = index > _sprites.Length-1 ? _sprites.Length-1 : index;
         index = index < 0 ? 0 : index;
 
-        _sprite.sprite = _sprites[index];        
+        _sprite.sprite = _sprites[index];
+        _ballZone.transform.position = _ballZones[index].position;
     }
 
     int GetIndex() {
-        var mousePos = Mouse.GetMousePos();
+        var mousePos = Mouse.Ball;
 
-        var cells = (_top - _bottom) / _sprites.Length;
-        return (int)((mousePos.y - _bottom) / cells);
+        var cells = (_top.position.y - _bottom.position.y) / _sprites.Length;
+        return (int)((Mouse.Ball.transform.position.y - _bottom.position.y) / cells);
     }
 
-    void Throw()
+    int GetIndex(Vector2 mouse)
     {
+        var mousePos = GetMouseWorldPosition(mouse);
+
+        var cells = (_top.position.y - _bottom.position.y) / _sprites.Length;
+        return (int)((mousePos.y - _bottom.position.y) / cells);
+    }
+
+    Vector3 GetMouseWorldPosition(Vector2 mouse)
+    {
+        var mousePos = Camera.main.ScreenToWorldPoint(mouse);
+        mousePos.z = 0;
+
+        return mousePos;
+    }
+
+    void Throw(Vector2 mouse)
+    {
+        ChoosedBall.Throw();
+        ChoosedBall.transform.parent = (null);
+        ChoosedBall.Rb.AddForce(Vector2.up * GetIndex(mouse) * _force, ForceMode2D.Impulse);
         _sprite.sprite = _sprites[4];
     }    
 }

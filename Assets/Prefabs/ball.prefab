@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5732579145467269567}
   - component: {fileID: 5732579145467269536}
   - component: {fileID: 220217698666243909}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rb: {fileID: 220217698666243909}
+  col: {fileID: 5732579145467269536}
   _sprites:
   - {fileID: 21300000, guid: f215823c00d16ba42b117b3a7b7e1f3c, type: 3}
   - {fileID: 21300000, guid: de0e73cf39f103340ab20c863eb23379, type: 3}
@@ -109,6 +110,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ce045a9e3d45c82458c74474f104bf4d, type: 3}
   - {fileID: 21300000, guid: caf12851900751b46833aa30cd68f189, type: 3}
   _sprite: {fileID: 5732579145467269538}
+  plinko: {fileID: 0}
 --- !u!58 &5732579145467269536
 CircleCollider2D:
   m_ObjectHideFlags: 0

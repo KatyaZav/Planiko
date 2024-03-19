@@ -9,7 +9,7 @@ public class Mouse
     public static Vector3 GetMousePos()
     {
         var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0;
+        //mousePos.z = 0;
 
         return mousePos;
     }

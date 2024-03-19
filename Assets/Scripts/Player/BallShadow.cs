@@ -1,16 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class BallShadow : MonoBehaviour
+public class BallShadow : MonoBehaviour, IPointerDownHandler
 {
     public Rigidbody2D Rb;
+    
     
     private const float Bottom = -2.45f;
     private const float Top = 2.53f;
 
+    [SerializeField] CircleCollider2D col;
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _sprite;
+
+    public Plinko plinko;
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        OnMouseDownTouch();
+    }
+
+    public void Throw()
+    {
+        col.enabled = true;
+    }
+
+    private void OnMouseDownTouch()
+    {
+        Debug.Log("Touch");
+
+        if (plinko != null && plinko.ChoosedBall == null)
+        {
+            plinko.ChooseBall(gameObject);
+            col.enabled = false;
+            Rb.angularVelocity = 0;
+            Rb.velocity = Vector2.zero;
+        }
+    }
 
     private void Update()
     {
@@ -26,16 +54,5 @@ public class BallShadow : MonoBehaviour
         index = index < 0 ? 0 : index;
 
         _sprite.sprite = _sprites[index];
-    }
-
-    private void OnMouseDrag()
-    {
-        var pos = Mouse.GetMousePos();
-
-        if (pos.x <= -1.45f || pos.x >= 1.45f || pos.y >= -0.45f || pos.y <= -2.45f)
-            return;
-
-        transform.position = pos;
-        Mouse.Ball = this;
     }
 }
