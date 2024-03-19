@@ -107,7 +107,7 @@ public class Plinko : MonoBehaviour
 
         ChoosedBall.Throw();
         ChoosedBall.transform.parent = (null);
-        ChoosedBall.Rb.AddForce(transform.up * (4-GetIndex(mouse)) * _force * 2, ForceMode2D.Impulse);
+        ChoosedBall.Rb.AddForce(transform.up * (4-GetIndex(mouse)) * _force * 1.5f, ForceMode2D.Impulse);
         //ChoosedBall.Rb.AddForce(Vector2.up * GetIndex(mouse) * _force, ForceMode2D.Impulse);
         ChoosedBall = null;
 
@@ -139,7 +139,7 @@ public class Plinko : MonoBehaviour
 
     void ChangeState(int index)
     {
-        Debug.Log(index);
+        //Debug.Log(index);
         _sprite.sprite = _sprites[index];
         _ballZone.transform.position = _ballZones[index].position;
         ChangeCollider(index);

@@ -15,6 +15,25 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
     [SerializeField] SpriteRenderer _sprite;
 
     public Plinko plinko;
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //var ball = collision.gameObject.GetComponent<BallShadow>();
+        if (collision.gameObject.CompareTag("ball"))
+        {             
+            ChangeVelocity(Rb);           
+        }
+    }
+
+    void ChangeVelocity(Rigidbody2D rb)
+    {
+        var rnd = rb.velocity.x + rb.velocity.y;
+
+        float x = Random.Range(-rnd, rnd) * 1.1f;
+        var y = Random.Range(-rnd, rnd)*1.1f;
+
+        rb.velocity = new Vector2(x, y);
+    }
 
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -34,7 +53,7 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
 
         if (plinko != null && plinko.ChoosedBall == null)
         {
-            Rb.bodyType = RigidbodyType2D.Kinematic;
+            Rb.bodyType = RigidbodyType2D.Static;
             gameObject.layer = LayerMask.NameToLayer("ball_collected"); 
             plinko.ChooseBall(gameObject);
             //col.enabled = false;
