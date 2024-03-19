@@ -14,12 +14,16 @@ public class Plinko : MonoBehaviour
     [SerializeField] Transform _bottom;
     [SerializeField] Transform _ballZone;
 
+    [SerializeField] BoxCollider2D col;
+
     private List<BallShadow> balls = new List<BallShadow>();
   
     public BallShadow ChoosedBall;
 
     public void ChooseBall(GameObject obj)
     {
+        col.enabled = true;
+
         obj.transform.SetParent(_ballZone);
         obj.transform.position = _ballZone.position;
 
@@ -36,7 +40,7 @@ public class Plinko : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         var ball = collision.gameObject.GetComponent<BallShadow>();
-        ball.plinko = null;
+        //ball.plinko = null;
         balls.Remove(ball);
     }
 
@@ -93,9 +97,15 @@ public class Plinko : MonoBehaviour
 
     void Throw(Vector2 mouse)
     {
+        col.enabled = false;
+
         ChoosedBall.Throw();
         ChoosedBall.transform.parent = (null);
-        ChoosedBall.Rb.AddForce(Vector2.up * GetIndex(mouse) * _force, ForceMode2D.Impulse);
+        ChoosedBall.Rb.AddForce(transform.up * (4-GetIndex(mouse)) * _force * 2, ForceMode2D.Impulse);
+        //ChoosedBall.Rb.AddForce(Vector2.up * GetIndex(mouse) * _force, ForceMode2D.Impulse);
+        ChoosedBall = null;
+
         _sprite.sprite = _sprites[4];
+        _ballZone.transform.position = _ballZones[4].position;
     }    
 }
