@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Plinko : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI tmp;
     [SerializeField] GameObject[] _colliders;
     [SerializeField] GameObject currentCollider;
 
@@ -31,20 +33,38 @@ public class Plinko : MonoBehaviour
         obj.transform.position = _ballZone.position;
 
         ChoosedBall = obj.GetComponent<BallShadow>();
+        AddBall(ChoosedBall);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         var ball = collision.gameObject.GetComponent<BallShadow>();
+        AddBall(ball);
+
+        if (balls.Count==4)
+        {
+            Debug.Log("Win!");
+        }
+    }
+
+    void AddBall(BallShadow ball)
+    {
         ball.plinko = this;
         balls.Add(ball);
+
+        tmp.text = balls.Count.ToString();
+    }
+    void RemoveBall(BallShadow ball)
+    {
+        balls.Remove(ball);
+        tmp.text = balls.Count.ToString();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         var ball = collision.gameObject.GetComponent<BallShadow>();
         //ball.plinko = null;
-        balls.Remove(ball);
+        RemoveBall(ball);
     }
 
   
@@ -106,9 +126,11 @@ public class Plinko : MonoBehaviour
         col.enabled = false;
 
         ChoosedBall.Throw();
+        RemoveBall(ChoosedBall);
         ChoosedBall.transform.parent = (null);
         ChoosedBall.Rb.AddForce(transform.up * (4-GetIndex(mouse)) * _force * 1.5f, ForceMode2D.Impulse);
         //ChoosedBall.Rb.AddForce(Vector2.up * GetIndex(mouse) * _force, ForceMode2D.Impulse);
+
         ChoosedBall = null;
 
         int x = GetIndex(mouse);
