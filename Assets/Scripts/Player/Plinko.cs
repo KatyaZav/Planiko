@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Plinko : MonoBehaviour
 {
+    [SerializeField] GameObject[] _colliders;
+    [SerializeField] GameObject currentCollider;
+
     [SerializeField] float _force;
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _sprite;
@@ -17,7 +20,7 @@ public class Plinko : MonoBehaviour
     [SerializeField] BoxCollider2D col;
 
     private List<BallShadow> balls = new List<BallShadow>();
-  
+
     public BallShadow ChoosedBall;
 
     public void ChooseBall(GameObject obj)
@@ -65,11 +68,9 @@ public class Plinko : MonoBehaviour
     {
         int index = GetIndex(vec);
 
-        index = index > _sprites.Length-1 ? _sprites.Length-1 : index;
-        index = index < 0 ? 0 : index;
-
         _sprite.sprite = _sprites[index];
         _ballZone.transform.position = _ballZones[index].position;
+        ChangeCollider(index);
     }
 
     int GetIndex() {
@@ -84,7 +85,12 @@ public class Plinko : MonoBehaviour
         var mousePos = GetMouseWorldPosition(mouse);
 
         var cells = (_top.position.y - _bottom.position.y) / _sprites.Length;
-        return (int)((mousePos.y - _bottom.position.y) / cells);
+        var index = (int)((mousePos.y - _bottom.position.y) / cells);
+
+        index = index > _sprites.Length - 1 ? _sprites.Length - 1 : index;
+        index = index < 0 ? 0 : index;
+
+        return index;
     }
 
     Vector3 GetMouseWorldPosition(Vector2 mouse)
@@ -105,7 +111,37 @@ public class Plinko : MonoBehaviour
         //ChoosedBall.Rb.AddForce(Vector2.up * GetIndex(mouse) * _force, ForceMode2D.Impulse);
         ChoosedBall = null;
 
-        _sprite.sprite = _sprites[4];
-        _ballZone.transform.position = _ballZones[4].position;
+        int x = GetIndex(mouse);
+
+        //_sprite.sprite = _sprites[4];
+        //_ballZone.transform.position = _ballZones[4].position;
+        //ChangeCollider(4);
+
+        StartCoroutine(ChangeStateThrow(x));
     }    
+
+    IEnumerator ChangeStateThrow(int x)
+    {
+        while (x <= 4)
+        {
+            ChangeState(x);
+            yield return new WaitForSeconds(0.02f);
+            x++;
+        }
+    }
+
+    void ChangeCollider(int a)
+    {
+        currentCollider.SetActive(false);
+        currentCollider = _colliders[a];
+        currentCollider.SetActive(true);
+    }
+
+    void ChangeState(int index)
+    {
+        Debug.Log(index);
+        _sprite.sprite = _sprites[index];
+        _ballZone.transform.position = _ballZones[index].position;
+        ChangeCollider(index);
+    }
 }

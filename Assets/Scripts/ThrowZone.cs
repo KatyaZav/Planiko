@@ -9,7 +9,7 @@ public class ThrowZone : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("UpDown");
+        //Debug.Log("UpDown");
     }
 
     public void OnPointerMove(PointerEventData eventData)

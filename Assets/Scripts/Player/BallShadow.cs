@@ -5,13 +5,12 @@ using UnityEngine.EventSystems;
 
 public class BallShadow : MonoBehaviour, IPointerDownHandler
 {
-    public Rigidbody2D Rb;
-    
+    public Rigidbody2D Rb;    
     
     private const float Bottom = -2.45f;
     private const float Top = 2.53f;
 
-    [SerializeField] CircleCollider2D col;
+    //[SerializeField] CircleCollider2D col;
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _sprite;
 
@@ -24,7 +23,9 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
 
     public void Throw()
     {
-        col.enabled = true;
+        //col.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("ball");
+        Rb.bodyType = RigidbodyType2D.Dynamic;
     }
 
     private void OnMouseDownTouch()
@@ -33,8 +34,10 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
 
         if (plinko != null && plinko.ChoosedBall == null)
         {
+            Rb.bodyType = RigidbodyType2D.Kinematic;
+            gameObject.layer = LayerMask.NameToLayer("ball_collected"); 
             plinko.ChooseBall(gameObject);
-            col.enabled = false;
+            //col.enabled = false;
             Rb.angularVelocity = 0;
             Rb.velocity = Vector2.zero;
         }
