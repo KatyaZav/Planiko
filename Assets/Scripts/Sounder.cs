@@ -13,6 +13,11 @@ public class Sounder : MonoBehaviour
         _sorse.volume = 0.3f;
     }
 
+    private void OnDisable()
+    {
+        UIManager.ChangedMusic -= Mus;        
+    }
+
     void Mus()
     {
         if (UIManager.isMusic == false)
