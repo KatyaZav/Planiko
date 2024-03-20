@@ -5,6 +5,7 @@ using TMPro;
 
 public class Plinko : MonoBehaviour
 {
+    [SerializeField] Sounder _sounder;
     [SerializeField] TextMeshProUGUI tmp;
     [SerializeField] GameObject[] _colliders;
     [SerializeField] GameObject currentCollider;
@@ -45,6 +46,7 @@ public class Plinko : MonoBehaviour
         if (balls.Count==4)
         {
             Debug.Log("Win!");
+            WinMenu.Instance.Win(gameObject.name);
         }
     }
 
@@ -124,6 +126,7 @@ public class Plinko : MonoBehaviour
 
     void Throw(Vector2 mouse)
     {
+        _sounder.MakeSound();
         col.enabled = false;
 
         ChoosedBall.Throw();

@@ -11,6 +11,7 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
     private const float Top = 2.53f;
 
     //[SerializeField] CircleCollider2D col;
+    [SerializeField] Sounder _sounder;
     [SerializeField] Sprite[] _sprites;
     [SerializeField] SpriteRenderer _sprite;
 
@@ -20,7 +21,8 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
     {
         //var ball = collision.gameObject.GetComponent<BallShadow>();
         if (collision.gameObject.CompareTag("ball"))
-        {             
+        {
+            _sounder.MakeSound();
             ChangeVelocity(Rb);           
         }
     }
@@ -42,6 +44,7 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
 
     public void Throw()
     {
+        
         //col.enabled = true;
         gameObject.layer = LayerMask.NameToLayer("ball");
         Rb.bodyType = RigidbodyType2D.Dynamic;

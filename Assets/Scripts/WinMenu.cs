@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class WinMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static WinMenu Instance;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] GameObject winMenu;
+
+    public void Win(string a)
     {
-        
+        winMenu.SetActive(true);
+        text.text = a;
+        Time.timeScale = 0;
+    }
+    private void Start()
+    {
+        Instance = this;   
     }
 }
