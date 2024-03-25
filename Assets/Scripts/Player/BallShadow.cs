@@ -16,26 +16,49 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
     [SerializeField] SpriteRenderer _sprite;
 
     public Plinko plinko;
-    
+    public bool isBam = false;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //var ball = collision.gameObject.GetComponent<BallShadow>();
-        if (collision.gameObject.CompareTag("ball"))
+        if (isBam)
+            return;
+
+        var ball = collision.gameObject.GetComponent<BallShadow>();
+        if (ball != null)
         {
+            ball.isBam = true;
+            this.isBam = true;
             _sounder.MakeSound();
-            ChangeVelocity(Rb);           
+
+            var r = Random.Range(0, 1) == 1;
+
+            ChangeVelocity(Rb, r);
+            ChangeVelocity(ball.Rb, !r);
+
+            ball.isBam = false;
+            this.isBam = false;
         }
     }
 
-    void ChangeVelocity(Rigidbody2D rb)
+    public void ChangeVelocity(Rigidbody2D rb, bool isLeft)
     {
         var rnd = rb.velocity.x + rb.velocity.y;
+        float x,y;
 
-        float x = Random.Range(-rnd, rnd) * 1.1f;
-        var y = Random.Range(-rnd, rnd)*1.1f;
+        if (isLeft)
+        {
+            x = Random.Range(rnd/3, rnd) * 1.1f;
+            y = Random.Range(rnd/3, rnd)*1.1f;
+        }
+        else
+        {
+            x = Random.Range(-rnd, -rnd/3) * 1.1f;
+            y = Random.Range(-rnd, -rnd/3) * 1.1f;
+        }
 
         rb.velocity = new Vector2(x, y);
     }
+    
 
     public void OnPointerDown(PointerEventData eventData)
     {
