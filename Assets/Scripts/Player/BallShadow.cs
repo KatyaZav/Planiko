@@ -56,7 +56,8 @@ public class BallShadow : MonoBehaviour, IPointerDownHandler
             y = Random.Range(-rnd, -rnd/3) * 1.1f;
         }
 
-        rb.velocity = new Vector2(x, y);
+        rb.AddForce(new Vector2(x, y)*20);
+        //rb.velocity = new Vector2(x, y);
     }
     
 

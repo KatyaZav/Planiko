@@ -43,7 +43,7 @@ public class Plinko : MonoBehaviour
         var ball = collision.gameObject.GetComponent<BallShadow>();
         AddBall(ball);
 
-        if (balls.Count==4)
+        if (balls.Count==12)
         {
             Debug.Log("Win!");
             WinMenu.Instance.Win(gameObject.name);
