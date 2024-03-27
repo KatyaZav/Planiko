@@ -26,6 +26,8 @@ public class Plinko : MonoBehaviour
 
     public BallShadow ChoosedBall;
 
+    public int GetListCounts => balls.Count;
+
     public void ChooseBall(GameObject obj)
     {
         col.enabled = true;
