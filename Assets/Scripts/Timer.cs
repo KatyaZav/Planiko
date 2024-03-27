@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
     {
         while (a >= 0)
         {
-            timerText.text = a.ToString();
+            timerText.text = "0:" + a.ToString();
             yield return new WaitForSeconds(1);
             a--;
         }
